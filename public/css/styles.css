@@ -1,6 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 /******* Change Box Model ***************/
 *,
 *:before,
 *:after {
   box-sizing: border-box;
+}
+
+/******* Font ***************/
+* {
+  font-family: 'Roboto', sans-serif;
+  font-size: clamp(.9rem, 1.5vw, 1.5rem)
+}
+
+h1 {
+  font-size: clamp(1.5rem, 3.5vw, 3.5rem);
+}
+
+h2 {
+  font-size: clamp(1rem, 2vw, 2rem);
+}
+
+/************** NAVIGATION ***************/
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+header a {
+  display: block;
+  color: #3D405B;
+  text-decoration: none;
+ }
+
+.siteName a {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+header div {
+  text-transform: uppercase;
+ }
+
+/************** NAVIGATION ***************/
+.navigation {
+  display: block;
+  background-color: #3D405B;
+}
+
+.navigation ul {
+  display: flex;
+  justify-content: space-evenly;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navigation li.current {
+  background-color: #333;
+  color: white;
+}
+
+.navigation a {
+  display: block;
+  padding: .8rem 10px;
+  color: white;
+  text-decoration: none;
+}
+
+.navigation a:hover {
+  background-color: #333;
+  color: white;
+}
+
+/* big */
+/* .navigation a {
+  border: none;
+} */
+
+/************** MAIN ***************/
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* display: grid;
+  grid-template-columns: 1fr 1fr; */
+    /* position: relative; */
+      /* Establishes a positioning context for absolute children */
+      /* display: inline-block; */
+      /* Helps the container wrap tightly around the image */
+}
+
+.hero img {
+  max-width: 100%;
+  height: auto;
+}
+
+.overlay-div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  z-index: 10;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.div1,
+.div2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border: 1px solid lightblue;
+}
+
+.upgrades {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  /* gap: 10px; */
+  /* align-items: end; */
+  align-items: center;
+}
+
+.upgrades figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+  padding: 10px;
+  width: 150px;
+  height: 120px;
+  background-color: lightsteelblue;
+}
+
+.upgrades figure img {
+  max-width: 100%;
+  height: auto;
+}
+
+.upgrades figure figcaption {
+  margin-top: 1rem;
+  font-size: 0.9em;
+  color: #333;
+  text-align: center;
+}
+
+/************** LARGER SCREEN ***************/
+@media (min-width: 768px) {
+  .container {
+    flex-direction: row;
+    flex-direction: row-reverse;
+    /* Div 2 will be on the left on large screens */
+  }
+
+  .overlay-div {
+    top: 0;
+    left: 15%;
+  }
 }
