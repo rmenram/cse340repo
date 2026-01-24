@@ -7,29 +7,33 @@
   box-sizing: border-box;
 }
 
-header,
-main,
-nav,
-footer {
-  max-width: 900px;
-  margin: 0 auto;
+/******* BODY ***************/
+body {
+  background-image: url("/images/site/checkerboard.jpg");;
 }
 
-/******* Font ***************/
+.master-container {
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: white;
+}
+
+/******* FONT ***************/
 * {
   font-family: 'Roboto', sans-serif;
-  font-size: clamp(.9rem, 1.5vw, 1.5rem)
+  font-size: clamp(.9rem, 1vw, 1rem)
 }
 
 h1 {
   font-size: clamp(1.5rem, 3.5vw, 3.5rem);
+  /* border: 1px solid blue; */
 }
 
 h2 {
   font-size: clamp(1rem, 2vw, 2rem);
 }
 
-/************** NAVIGATION ***************/
+/************** HEADER ***************/
 header {
   display: flex;
   justify-content: space-between;
@@ -85,23 +89,19 @@ header div {
   color: white;
 }
 
-/* big */
-/* .navigation a {
-  border: none;
-} */
-
 /************** MAIN ***************/
 .hero {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* display: grid;
-  grid-template-columns: 1fr 1fr; */
-    /* position: relative; */
-      /* Establishes a positioning context for absolute children */
-      /* display: inline-block; */
-      /* Helps the container wrap tightly around the image */
+  padding: 1rem;
+  /* border: 1px solid red; */
+
+  width: 90%;
+  max-width: 600px;
+  margin: 20px auto;
+  /* min-height: 200px; */
 }
 
 .hero img {
@@ -109,20 +109,25 @@ header div {
   height: auto;
 }
 
-.overlay-div {
+.hero div {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 10%;
+  left: 20%;
+  width: 40%;
+  height: auto;
   color: white;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 10px;
   z-index: 10;
+
+  transform: translate(-50%, -20%);
 }
 
 .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 100%;
 }
 
 .div1,
@@ -136,28 +141,28 @@ header div {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto;
-  /* gap: 10px; */
-  /* align-items: end; */
-  align-items: center;
 }
 
-.upgrades figure {
+.upgrades div {
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   align-items: center;
-  margin: 10px;
-  padding: 10px;
-  width: 150px;
-  height: 120px;
+  height: 8rem;
   background-color: lightsteelblue;
+  border: 5px solid white;
+
+  min-width: 150px;
 }
 
-.upgrades figure img {
-  max-width: 100%;
+.upgrades div img {
+  /* max-width: 100%; */
+  width: 65px;
   height: auto;
+  text-align: center;
 }
 
-.upgrades figure figcaption {
+.upgrades span {
   margin-top: 1rem;
   font-size: 0.9em;
   color: #333;
@@ -170,10 +175,5 @@ header div {
     flex-direction: row;
     flex-direction: row-reverse;
     /* Div 2 will be on the left on large screens */
-  }
-
-  .overlay-div {
-    top: 0;
-    left: 5%;
   }
 }
