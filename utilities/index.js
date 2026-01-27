@@ -8,7 +8,7 @@ Util.getNav = async function (req, res, next) {
   let data = await invModel.getClassifications()
   console.log(data)
   let list = "<ul>"
-  list += '<li class="current"><a href="/" title="Home page">Home</a></li>'
+  list += '<li><a href="/" title="Home page">Home</a></li>'
   data.rows.forEach((row) => {
     list += "<li>"
     list +=
@@ -31,7 +31,7 @@ Util.getNav = async function (req, res, next) {
 Util.buildClassificationGrid = async function(data){
   let grid
   if(data.length > 0){
-    grid = '<ul id="inv-display">'
+    grid = '<ul id="inv-display" class="classification">'
     data.forEach(vehicle => { 
       grid += '<li>'
       grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id 
@@ -54,6 +54,51 @@ Util.buildClassificationGrid = async function(data){
     grid += '</ul>'
   } else { 
     grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
+  }
+  return grid
+}
+
+/* **************************************
+* Build the vehicle view HTML
+* ************************************ */
+Util.buildVehicleGrid = async function(data){
+  let grid
+  if(data.length > 0){
+    grid = '<div id="veh-display" class="vehicle">'
+    data.forEach(vehicle => { 
+      grid += '<div class="vehicle-photo">'
+      grid +=  '<img src="' + vehicle.inv_image 
+      +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
+      +' on CSE Motors" />'
+      grid += '</div>'
+      grid += '<div class="vehicle-details">'
+      grid += '<h2>'
+      grid += vehicle.inv_make + ' ' + vehicle.inv_model + ' Details'
+      grid += '</h2>'
+      grid += '<div class="details">'
+      grid += '<div class="pair-values">'
+      grid += '<span class="field">Price: </span>'
+      grid += '<span class="price">$' 
+      + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>'
+      grid += '</div>'
+      grid += '<div class="pair-values">'
+      grid += '<span class="field">Description: </span>'
+      grid += '<span>' + vehicle.inv_description + '</span>'
+      grid += '</div>'
+      grid += '<div class="pair-values">'
+      grid += '<span class="field">Color: </span>'
+      grid += '<span>' +  vehicle.inv_color + '</span>'
+      grid += '</div>'
+      grid += '<div class="pair-values">'      
+      grid += '<span class="field">Miles: </span>'
+      grid += '<span>' 
+      + new Intl.NumberFormat('en-US').format(vehicle.inv_miles) + '</span>'
+      grid += '</div>'
+      grid += '</div>'
+    })
+    grid += '</div>'
+  } else { 
+    grid += '<p class="notice">Sorry, no matching vehicle could be found.</p>'
   }
   return grid
 }

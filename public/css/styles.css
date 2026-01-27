@@ -169,11 +169,91 @@ header div {
   text-align: center;
 }
 
+.classification {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1rem;
+  list-style-type: none;
+  padding: 1rem;
+}
+
+.classification li {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  /* box-sizing: border-box; */
+  text-align: center;
+}
+
+.classification a {
+  display: block;
+  color: #3D405B;
+  text-decoration: none;
+}
+
+.classification a:hover {
+  background-color: #3D405B;
+  color: white;
+}
+
+.vehicle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.vehicle-photo {
+  width: 100%;
+}
+
+.vehicle-photo img {
+  max-width: 100%;
+  height: auto;
+}
+
+.details div:nth-child(even) {
+  background-color: white;
+}
+
+.details div:nth-child(odd) {
+  background-color: #eee;
+}
+
+.pair-values {
+  padding: 1rem;
+}
+
+.field,
+.price {
+  font-weight: bold;
+}
+
+/* footer {
+  border: 1px solid #ccc;
+} */
+
+footer a {
+  display: block;
+  background-color: #3D405B;
+  color: white;
+  padding: 1rem;
+}
+
 /************** LARGER SCREEN ***************/
 @media (min-width: 768px) {
   .container {
     flex-direction: row;
     flex-direction: row-reverse;
     /* Div 2 will be on the left on large screens */
+  }
+
+  .classification {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .vehicle {
+    flex-direction: row;
   }
 }
