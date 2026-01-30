@@ -230,6 +230,30 @@ header div {
   font-weight: bold;
 }
 
+.register,
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* width: 100%; */
+}
+
+form {
+  padding: 1.5rem;
+  background-color: #fff;
+  /* max-width: 600px; */
+  margin: 10px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+}
+
+label,
+input {
+  display: block;
+  margin-bottom: 10px;
+  /* Optional: adds some vertical spacing */
+}
+
 /* footer {
   border: 1px solid #ccc;
 } */
