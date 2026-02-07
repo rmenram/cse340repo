@@ -230,6 +230,8 @@ header div {
   font-weight: bold;
 }
 
+.add-inventory,
+.add-classification,
 .register,
 .login {
   display: flex;
@@ -242,16 +244,27 @@ header div {
 form {
   padding: 1.5rem;
   background-color: #fff;
-  /* max-width: 600px; */
+  min-width: 250px;
+  max-width: 600px;
   margin: 10px;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
 }
 
 label,
-input {
+input,
+select,
+textarea {
   display: block;
   margin-bottom: 10px;
-  /* Optional: adds some vertical spacing */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.management-links {
+  display: flex;
+  flex-direction: column;
+  padding-left: 1rem;
+  gap: 1rem;
 }
 
 /* footer {

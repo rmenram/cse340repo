@@ -82,6 +82,7 @@ app.use(async (err, req, res, next) => {
   if (err.status == 404) { message = err.message }
   else if (err.status == 500) { message = 'You found a 500 error! You are a good tester!'}
   else { message = 'Oh no! There was a crash. Maybe try a different route?' }
+  // else { message = err.message }
   res.render("errors/error", {
     title: err.status || 'Server Error',
     message,

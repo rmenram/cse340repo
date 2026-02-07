@@ -41,6 +41,43 @@ async function getVehicleByInventoryId(inv_id) {
   }
 }
 
+/* **********************
+ *   Check for existing classification
+ * ********************* */
+async function checkExistingClassification(classificationName){
+  try {
+    const sql = "SELECT * FROM classification WHERE classification_name = $1"
+    const email = await pool.query(sql, [classificationName])
+    return email.rowCount
+  } catch (error) {
+    return error.message
+  }
+}
+
+/* *****************************
+*   Add new classification
+* *************************** */
+async function addClassification(classificationName) {
+    try {
+        const sql = "INSERT INTO classification (classification_name) VALUES ($1)";
+        return await pool.query(sql, [classificationName]);
+    } catch (error) {
+        return error.message;
+    }
+}
+
+/* *****************************
+*   Add new vehicle
+* *************************** */
+async function addVehicle(classification_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color) {
+    try {
+        const sql = "INSERT INTO inventory (classification_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)";
+        return await pool.query(sql, [classification_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color]);
+    } catch (error) {
+        return error.message;
+    }
+}
+
 // module.exports = { getClassifications }
 
-module.exports = {getClassifications, getInventoryByClassificationId, getVehicleByInventoryId};
+module.exports = {getClassifications, getInventoryByClassificationId, getVehicleByInventoryId, checkExistingClassification, addClassification, addVehicle};
