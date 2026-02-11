@@ -50,4 +50,15 @@ router.post(
   utilities.handleErrors(invController.updateInventory)
 )
 
+// Route to build inventory edit view
+router.get("/delete/:inv_id", utilities.handleErrors(invController.buildDeleteByInvId));
+// Process delete
+// router.post(
+//   "/delete",
+//   invValidate.addInventoryRules(),
+//   invValidate.checkUpdateData,
+//   utilities.handleErrors(invController.deleteInventory)
+// )
+router.post("/delete", utilities.handleErrors(invController.deleteInventory))
+
 module.exports = router;
