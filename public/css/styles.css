@@ -267,6 +267,20 @@ textarea {
   gap: 1rem;
 }
 
+.management-inventory {
+  padding-left: 1rem;
+  /* min-width: 250px; */
+  max-width: 300px;
+}
+
+#inventoryDisplay tbody tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+#inventoryDisplay tbody tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
 /* footer {
   border: 1px solid #ccc;
 } */

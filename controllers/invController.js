@@ -40,9 +40,15 @@ invCont.buildByInvId = async function (req, res, next) {
 /* ***************************
  *  Deliver inventory management view
  * ************************** */
-invCont.buildManagementView = async function (req, res) {
-  let nav = await utilities.getNav()
-  res.render("./inventory/management", {title: "Vehicle Management",nav})
+invCont.buildManagementView = async function (req, res, next) {
+    let nav = await utilities.getNav()
+    const classificationSelect = await utilities.buildClassificationList()
+    res.render("./inventory/management", {
+        title: "Vehicle Management",
+        nav,
+        errors: null,
+        classificationSelect,
+    })
 }
 
 /* ***************************
@@ -157,6 +163,114 @@ invCont.addInventory = async (req, res) => {
             // inv_price,
             // inv_miles,
             // inv_color,
+        });
+    }
+};
+
+/* ***************************
+ *  Return Inventory by Classification As JSON
+ * ************************** */
+invCont.getInventoryJSON = async (req, res, next) => {
+  const classification_id = parseInt(req.params.classification_id)
+  const invData = await invModel.getInventoryByClassificationId(classification_id)
+  if (invData[0].inv_id) {
+    return res.json(invData)
+  } else {
+    next(new Error("No data returned"))
+  }
+}
+
+/* ***************************
+ *  Deliver Edit Vehicle view
+ * ************************** */
+invCont.buildEditByInvId = async function (req, res, next) {
+    const inv_id = parseInt(req.params.inv_id)
+    const data = await invModel.getVehicleByInventoryId(inv_id)
+    let nav = await utilities.getNav()
+    const classificationSelect = await utilities.buildClassificationList(data[0].classification_id)
+    const itemName = (data.length > 0) ? data[0].inv_year + " " + data[0].inv_make + " " + data[0].inv_model : "No Vehicle";
+    res.render("./inventory/edit-inventory", {
+    title: itemName,
+    nav,
+    errors: null,
+    classificationSelect,
+    inv_id: data[0].inv_id,
+    inv_make: data[0].inv_make,
+    inv_model: data[0].inv_model,
+    inv_year: data[0].inv_year,
+    inv_description: data[0].inv_description,
+    inv_image: data[0].inv_image,
+    inv_thumbnail: data[0].inv_thumbnail,
+    inv_price: data[0].inv_price,
+    inv_miles: data[0].inv_miles,
+    inv_color: data[0].inv_color,
+    classification_id: data[0].classification_id,
+  })
+}
+
+/* ****************************************
+*  Process Update Vehicle
+* *************************************** */
+invCont.updateInventory = async (req, res) => {
+    let nav = await utilities.getNav();
+    // let classificationSelect = await utilities.buildClassificationList();
+    const {
+        inv_id,
+        inv_make,
+        inv_model,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_price,
+        inv_year,
+        inv_miles,
+        inv_color,
+        classification_id,
+    } = req.body;
+
+    const regResult = await invModel.updateInventory(
+        inv_id,
+        inv_make,
+        inv_model,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_price,
+        inv_year,
+        inv_miles,
+        inv_color,
+        classification_id,
+    );
+
+    if (regResult) {
+        req.flash("success", `The ${inv_make} ${inv_model} vehicle was successfully updated.`);
+    //   res.render("inventory/management", {
+    //       title: "Vehicle Management",
+    //       nav,
+    //       classificationSelect,
+    //       // errors: null,
+    //   });
+        res.redirect("/inv/")        
+    } else {
+        const classificationSelect = await utilities.buildClassificationList(classification_id)
+        const itemName = `${inv_make} ${inv_model}`
+        req.flash("notice", "Sorry, the update failed.");
+        res.status(501).render("inventory/edit-inventory", {
+        title: "Edit " + itemName,
+        nav,
+        classificationSelect: classificationSelect,
+        errors: null,
+        inv_id,
+        inv_make,
+        inv_model,
+        inv_year,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_price,
+        inv_miles,
+        inv_color,
+        classification_id
         });
     }
 };
