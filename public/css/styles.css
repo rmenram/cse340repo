@@ -260,6 +260,10 @@ textarea {
   box-sizing: border-box;
 }
 
+.manage {
+  padding-left: 1rem;
+}
+
 .management-links {
   display: flex;
   flex-direction: column;

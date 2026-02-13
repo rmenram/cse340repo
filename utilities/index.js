@@ -170,4 +170,17 @@ Util.checkJWTToken = (req, res, next) => {
   }
  }
 
+
+ /* ****************************************
+ *  Check Priviligies
+ * ************************************ */
+ Util.checkPrivileges = (req, res, next) => {
+  if (res.locals.accountData && (res.locals.accountData.account_type === 'Employee' || res.locals.accountData.account_type === 'Admin')) {
+    next()
+  } else {
+    req.flash("notice", "Please log in with appropriate privileges to access this area.")
+    return res.redirect("/account/login")
+  }
+ }
+
 module.exports = Util

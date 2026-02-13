@@ -68,6 +68,11 @@ app.get("/", utilities.handleErrors(baseController.buildHome))
 app.use("/inv", inventoryRoute)
 // Account routes
 app.use("/account", accountRoute)
+// Process the logout request
+app.get('/logout', (req, res) => {
+  res.clearCookie("jwt")
+  res.redirect('/'); //
+});
 // 500 Route 
 app.get('/500-error', (req, res, next) => {
   next({ status: 500, message: 'I am here for a special purpose.' })

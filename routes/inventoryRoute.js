@@ -13,25 +13,27 @@ router.get("/type/:classificationId", invController.buildByClassificationId);
 router.get("/detail/:inv_id", invController.buildByInvId);
 
 // Route to build vehicle management view
-router.get("/", utilities.handleErrors(invController.buildManagementView));
+router.get("/", utilities.checkPrivileges, utilities.handleErrors(invController.buildManagementView));
 
 // Route to add new classification view
-router.get("/add-classification", invController.buildAddClassification);
+router.get("/add-classification", utilities.checkPrivileges, invController.buildAddClassification);
 
 // Process the new classification
 router.post(
   "/add-classification",
+  utilities.checkPrivileges, 
   classValidate.classificationRules(),
   classValidate.checkClassificationData,
   utilities.handleErrors(invController.addClassification)
 )
 
 // Route to add new vehicle view
-router.get("/add-inventory", invController.buildAddInventory)
+router.get("/add-inventory", utilities.checkPrivileges, invController.buildAddInventory)
 
 // Process the new vehicle
 router.post(
   "/add-inventory",
+  utilities.checkPrivileges, 
   invValidate.addInventoryRules(),
   invValidate.checkInventoryData,
   utilities.handleErrors(invController.addInventory)
@@ -40,18 +42,19 @@ router.post(
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 
 // Route to build inventory edit view
-router.get("/edit/:inv_id", utilities.handleErrors(invController.buildEditByInvId));
+router.get("/edit/:inv_id", utilities.checkPrivileges, utilities.handleErrors(invController.buildEditByInvId));
 // Process the update
 // router.post("/update/", utilities.handleErrors(invController.updateInventory))
 router.post(
   "/update",
+  utilities.checkPrivileges, 
   invValidate.addInventoryRules(),
   invValidate.checkUpdateData,
   utilities.handleErrors(invController.updateInventory)
 )
 
-// Route to build inventory edit view
-router.get("/delete/:inv_id", utilities.handleErrors(invController.buildDeleteByInvId));
+// Route to build inventory delete view
+router.get("/delete/:inv_id", utilities.checkPrivileges, utilities.handleErrors(invController.buildDeleteByInvId));
 // Process delete
 // router.post(
 //   "/delete",
@@ -59,6 +62,6 @@ router.get("/delete/:inv_id", utilities.handleErrors(invController.buildDeleteBy
 //   invValidate.checkUpdateData,
 //   utilities.handleErrors(invController.deleteInventory)
 // )
-router.post("/delete", utilities.handleErrors(invController.deleteInventory))
+router.post("/delete", utilities.checkPrivileges, utilities.handleErrors(invController.deleteInventory))
 
 module.exports = router;

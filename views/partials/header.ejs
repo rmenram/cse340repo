@@ -3,7 +3,15 @@
         <a href="/" title="Return to home page">NEW Motors</a>
     </span>
     <div id="tools">
-        <a title="Click to log in" href="/account/login">My Account</a>
+        <!-- <a title="Click to log in" href="/account/login">My Account</a> -->
         <!-- <a title="Click to log in" href="#">My Account</a> -->
+        <% if (locals.loggedin) { %>
+            <!-- User is logged in -->
+            <a title="Click to manage accounts" href="/account">Welcome <%= locals.accountData.account_firstname %></a>
+            <a title="Click to log out" href="/logout">Logout</a>
+        <% } else { %>
+            <!-- User is not logged in -->
+            <a title="Click to log in" href="/account/login">My Account</a>
+        <% } %>
     </div>
 </header>
