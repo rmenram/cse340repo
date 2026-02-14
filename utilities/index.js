@@ -170,7 +170,6 @@ Util.checkJWTToken = (req, res, next) => {
   }
  }
 
-
  /* ****************************************
  *  Check Priviligies
  * ************************************ */
@@ -181,6 +180,32 @@ Util.checkJWTToken = (req, res, next) => {
     req.flash("notice", "Please log in with appropriate privileges to access this area.")
     return res.redirect("/account/login")
   }
- }
+}
+
+/*********************************
+W06 Assignment: Final Enhancement
+*********************************/
+/* **************************************
+* Build the edit classification list
+* ************************************ */
+Util.buildEditClassificationList = async function (req, res, next) {
+  let data = await invModel.getClassifications()
+  console.log(data)
+  let list = "<ul>"
+  data.rows.forEach((row) => {
+    list += "<li>"
+    list +=
+      '<a href="/inv/edit-classification/' +
+      row.classification_id +
+      '" title="Click to Edit ' +
+      row.classification_name +
+      ' classification">' +
+      row.classification_name +
+      "</a>"
+    list += "</li>"
+  })
+  list += "</ul>"
+  return list
+}
 
 module.exports = Util

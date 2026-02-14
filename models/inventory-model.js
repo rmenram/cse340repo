@@ -47,8 +47,8 @@ async function getVehicleByInventoryId(inv_id) {
 async function checkExistingClassification(classificationName){
   try {
     const sql = "SELECT * FROM classification WHERE classification_name = $1"
-    const email = await pool.query(sql, [classificationName])
-    return email.rowCount
+    const classification = await pool.query(sql, [classificationName])
+    return classification.rowCount
   } catch (error) {
     return error.message
   }
@@ -129,6 +129,36 @@ async function deleteInventory(inv_id) {
   }
 }
 
+/*********************************
+W06 Assignment: Final Enhancement
+*********************************/
+/* ***************************
+ *  Get classification detail by classification_id
+ * ************************** */
+async function getClassificationById(classification_id) {
+  try {
+    const data = await pool.query(`SELECT * FROM classification AS i WHERE i.classification_id = $1`,[classification_id])
+    return data.rows
+  } catch (error) {
+    console.error("getClassificationById error " + error)
+  }
+}
+
+/* *****************************
+*   Update Classification
+* *************************** */
+async function updateClassification(classification_id, classification_name) {
+  try {
+    const sql = "UPDATE classification SET classification_name = $1 WHERE classification_id = $2 RETURNING *";
+    const data = await pool.query(sql, [classification_name, classification_id])
+    return data.rows[0]
+  } catch (error) {
+    console.error("classification_name error " + classification_name)
+    console.error("classification_id error " + classification_id)
+    console.error("model error: " + error)
+  }
+}
+
 // module.exports = { getClassifications }
 
-module.exports = {getClassifications, getInventoryByClassificationId, getVehicleByInventoryId, checkExistingClassification, addClassification, addVehicle, updateInventory, deleteInventory};
+module.exports = {getClassifications, getInventoryByClassificationId, getVehicleByInventoryId, checkExistingClassification, addClassification, addVehicle, updateInventory, deleteInventory, getClassificationById, updateClassification};

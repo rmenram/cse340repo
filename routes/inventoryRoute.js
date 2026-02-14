@@ -64,4 +64,20 @@ router.get("/delete/:inv_id", utilities.checkPrivileges, utilities.handleErrors(
 // )
 router.post("/delete", utilities.checkPrivileges, utilities.handleErrors(invController.deleteInventory))
 
+/*********************************
+W06 Assignment: Final Enhancement
+*********************************/
+// Route to build classification management view
+router.get("/manage-classifications", utilities.checkPrivileges, utilities.handleErrors(invController.buildClassificationMgmtView));
+// Route to build classification edit view
+router.get("/edit-classification/:classification_id", utilities.checkPrivileges, utilities.handleErrors(invController.buildEditClassification));
+// Process the classification update
+router.post(
+  "/edit-classification",
+  utilities.checkPrivileges, 
+  classValidate.classificationRules(),
+  classValidate.checkClassificationUpdateData,
+  utilities.handleErrors(invController.updateClassification)
+)
+
 module.exports = router;

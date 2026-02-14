@@ -325,4 +325,87 @@ invCont.deleteInventory = async (req, res) => {
     }
 };
 
+/*********************************
+W06 Assignment: Final Enhancement
+*********************************/
+/* ***************************
+ *  Deliver classification management view
+ * ************************** */
+invCont.buildClassificationMgmtView = async function (req, res, next) {
+    let nav = await utilities.getNav()
+    let list = await utilities.buildEditClassificationList()
+    res.render("./inventory/manage-classifications", {
+        title: "Classification Management",
+        nav,
+        errors: null,
+        list,
+    })
+}
+
+/* ***************************
+ *  Deliver Edit Classification view
+ * ************************** */
+invCont.buildEditClassification = async function (req, res, next) {
+    const classification_id = parseInt(req.params.classification_id)
+    const data = await invModel.getClassificationById(classification_id)
+    let nav = await utilities.getNav()
+    if (!data.length > 0) {
+        req.flash("notice", "Classification Not Found")
+        return res.redirect("/inv/manage-classifications")
+    }
+    res.render("./inventory/edit-classification", {
+    title: data[0].classification_name,
+    nav,
+    errors: null,
+    classification_name: data[0].classification_name,
+    classification_id: data[0].classification_id,
+  })
+}
+
+/* ****************************************
+*  Process Update Classification X
+* *************************************** */
+invCont.updateClassificationX = async (req, res) => {
+    let nav = await utilities.getNav();
+    const {classification_name,classification_id,} = req.body;
+    const regResult = await invModel.updateClassification(classification_id,classification_name,)
+    if (regResult) {
+        req.flash("success", `The Classification was successfully updated.`);
+        res.redirect("/inv/manage-classifications")        
+    } else {
+        req.flash("notice", "Sorry, the update failed.")
+        return res.redirect("/inv/manage-classifications")
+    }
+};
+
+/* ****************************************
+*  Process Update Classification
+* *************************************** */
+invCont.updateClassification = async (req, res) => {
+    const {classification_id,classification_name} = req.body;
+    const regResult = await invModel.updateClassification(classification_id,classification_name);
+    if (regResult) {
+        //Reflect the updated classification name in both the navigation bar and in the classification list
+        let nav = await utilities.getNav()
+        let list = await utilities.buildEditClassificationList()
+        req.flash("success", `The classification name was succesfully updated to ${classification_name}.`);
+        res.render("inventory/manage-classifications", {
+            title: "Classification Management",
+            nav,
+            errors: null,
+            list,
+        });
+    } else {
+        const itemName = classification_name
+        req.flash("notice", "Sorry, the update failed.");
+        res.status(501).render("inventory/edit-classification", {
+        title: "Edit " + itemName,
+        nav: req.nav,//no need to reflect the latest and greatest navigation since the update failed
+        errors: null,
+        classification_name,
+        classification_id,
+        });
+    }
+};
+
 module.exports = invCont

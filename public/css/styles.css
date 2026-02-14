@@ -285,6 +285,31 @@ textarea {
   background-color: #ffffff;
 }
 
+/*********************************
+W06 Assignment: Final Enhancement
+*********************************/
+.manage-classifications {
+  padding-left: 1rem;
+}
+
+.manage-classifications ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0 1rem 0 0;
+}
+
+.manage-classifications li {
+  padding: 5px;
+}
+
+.manage-classifications li:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+.manage-classifications li:nth-child(even) {
+  background-color: #ffffff;
+}
+
 /* footer {
   border: 1px solid #ccc;
 } */

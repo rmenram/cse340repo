@@ -41,4 +41,27 @@ validate.checkClassificationData = async (req, res, next) => {
     next()
 }
 
+/*********************************
+W06 Assignment: Final Enhancement
+*********************************/
+/* ******************************
+ * Check data and return errors or continue to controller
+ * ***************************** */
+validate.checkClassificationUpdateData = async (req, res, next) => {
+    const { classification_name } = req.body
+    let errors = [];
+    errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        let nav = await utilities.getNav()
+        res.render("inventory/edit-classification", {
+            errors,
+            title: "Edit Classification",
+            nav, 
+            classification_name,
+        })
+        return
+    }
+    next()
+}
+
 module.exports = validate
